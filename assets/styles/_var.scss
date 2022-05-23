@@ -1,0 +1,25 @@
+:root {
+    /* Blue */
+    --bs-primary-rgb: 18, 69, 89;
+    --bs-primary: rgb(var(--bs-primary-rgb));
+
+    /* Orange */
+    --bs-secondary-rgb: 213, 70, 31; 
+    --bs-secondary: rgb(var(--bs-secondary-rgb));
+
+    /* Dark */
+    --bs-dark-rgb: 1, 22, 30; 
+    --bs-dark: rgb(var(--bs-dark-rgb));
+
+    /* White */
+    --bs-white-rgb: 241, 241, 241; 
+    --bs-white: rgb(var(--bs-white-rgb));
+
+
+    --foreground-primary: rgb(var(--bs-white-rgb));
+
+    --bs-font-sans-serif: 'Open Sans', sans-serif;
+    --bs-body-font-family: var(--bs-font-sans-serif);
+
+    --bs-font-monospace: 'Archivo Black', sans-serif;
+}
