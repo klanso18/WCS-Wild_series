@@ -9,41 +9,26 @@ use Doctrine\Persistence\ObjectManager;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
 {
+    public const PROGRAMS = [
+        ['title' => 'Walking dead', 'synopsis' => 'Des zombies envahissent la terre', 'category' => 'category_Horreur'],
+        ['title' => 'All of us are dead', 'synopsis' => 'Où sont les vivants?', 'category' => 'category_Horreur'],
+        ['title' => 'American Horror Story', 'synopsis' => "Une histoire de film d'horreur", 'category' => 'category_Horreur'],
+        ['title' => 'Slasher', 'synopsis' => "D'ignobles tueurs en série sèment l'effroi", 'category' => 'category_Horreur'],
+        ['title' => 'Stranger things', 'synopsis' => "Comme c'est étrange", 'category' => 'category_Fantastique'],
+        ['title' => 'Breaking bad', 'synopsis' => "Un peu de chimie", 'category' => 'category_Action'],
+        ['title' => 'The Witcher', 'synopsis' => "Des bonbons ou un sort !", 'category' => 'category_Aventure'],
+        ['title' => 'Arcane', 'synopsis' => "Entre technologies magiques et convictions incompatibles", 'category' => 'category_Animation']
+    ];
+
     public function load(ObjectManager $manager)
     {
-        $program = new Program();
-        $program->setTitle('Walking dead');
-        $program->setSynopsis('Des zombies envahissent la terre');
-        $program->setCategory($this->getReference('category_Horreur'));
-        $manager->persist($program);
-        $manager->flush();
-
-        $program = new Program();
-        $program->setTitle('Stranger things');
-        $program->setSynopsis("Comme c'est étrange");
-        $program->setCategory($this->getReference('category_Fantastique'));
-        $manager->persist($program);
-        $manager->flush();
-
-        $program = new Program();
-        $program->setTitle('Breaking bad');
-        $program->setSynopsis("Un peu de chimie");
-        $program->setCategory($this->getReference('category_Action'));
-        $manager->persist($program);
-        $manager->flush();
-
-        $program = new Program();
-        $program->setTitle('The Witcher');
-        $program->setSynopsis("Des bonbons ou un sort");
-        $program->setCategory($this->getReference('category_Aventure'));
-        $manager->persist($program);
-        $manager->flush();
-
-        $program = new Program();
-        $program->setTitle('Arcane');
-        $program->setSynopsis("Entre technologies magiques et convictions incompatibles");
-        $program->setCategory($this->getReference('category_Animation'));
-        $manager->persist($program);
+        foreach (self::PROGRAMS as $programName) {
+            $program = new Program();
+            $program->setTitle($programName['title']);
+            $program->setSynopsis($programName['synopsis']);
+            $program->setCategory($this->getReference($programName['category']));
+            $manager->persist($program);
+        }
         $manager->flush();
     }
 
