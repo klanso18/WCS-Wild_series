@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{program.title}} {% endblock %}
+
+{% block body %}
+    <div class="media">
+    <div class="poster">
+        <img class="img-fluid" src="{{ asset('build/images/' ~ program.poster)}} " alt="{{ program.title }}">
+    </div>
+    <div class="media-body">
+    <h1 class="mt-O">{{ program.title }}</h1>
+            <h2>Saison {{ season.number }}</h2>
+                <h3>Episode {{ episode.number }} : {{episode.title}}</h3>
+                    <p>Synopsis : <br>{{ episode.synopsis }}</p>
+
+
+    <a href="{{ path('program_index') }}">
+    Retour à la liste des programmes
+    </a>
+    </div>
+{% endblock %}

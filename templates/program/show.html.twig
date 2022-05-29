@@ -13,7 +13,7 @@
             <p>Synopsis : <br>{{ program.synopsis }}</p>
             <p>Saisons : 
                 <ul>
-                {% for season in seasons %} 
+                {% for season in program.seasons %} 
                     <li><a href="/program/{{ program.id }}/season/{{ season.id }}">Saison {{ season.number }}</a></li>
                 {% endfor %} 
                 </ul>

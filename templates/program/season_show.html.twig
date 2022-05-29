@@ -9,7 +9,6 @@
         </div>
     <div class="media-body">
         <h1 class="mt-O">{{ program.title }}</h1>
-            {% for season in seasons %} 
                 <h2>Saison {{ season.number }}</h2>
                     <ul>
                         <li>Année : {{ season.year }}</li>
@@ -18,10 +17,10 @@
                     <h3>Liste des épisodes :</h3>
                         {% for episode in season.episodes %}
                             <ul>
-                                <li>Episode {{ episode.number }} : {{ episode.title }}</li>
+                                <li><a href="{{ path("program_episode_show", {"program_id": program.id, "season_id": season.id,
+                                "episode_id": episode.id})}}">Episode {{episode.number}} : {{episode.title}}</a>  </li>
                             </ul>
                         {% endfor %}
-            {% endfor %} 
     </div>
 
     <a href="{{ path('program_index') }}">
