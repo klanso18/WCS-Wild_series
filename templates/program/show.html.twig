@@ -4,11 +4,20 @@
 
 {% block body %}
     <div class="media">
-        <img class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
+        <div class="poster">
+            <img class="img-fluid" src="{{ asset('build/images/' ~ program.poster)}} " alt="{{ program.title }}">
+        </div>
         <div class="media-body">
             <h1 class="mt-O">{{ program.title }}</h1>
-            <p>{{ program.synopsis }}</p>
             <p>Catégorie : {{ program.category.name }}</p>
+            <p>Synopsis : <br>{{ program.synopsis }}</p>
+            <p>Saisons : 
+                <ul>
+                {% for season in seasons %} 
+                    <li><a href="/program/{{ program.id }}/season/{{ season.id }}">Saison {{ season.number }}</a></li>
+                {% endfor %} 
+                </ul>
+            </p>
         </div>
 
         <a href="{{ path('program_index') }}">

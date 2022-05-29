@@ -7,6 +7,71 @@
 body {
     background-color: rgb(255, 255, 255);
     margin-top: 4rem;
+    width: 100%;
+    height: 100%;
+}
+
+.img-fluid {
+    border-radius: 10px;
+    min-width: 100%;
+}
+
+.media {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.media-body {
+    padding: 2rem;
+    text-align: left;
+}
+
+
+
+#homepage {
+    background-image: url("/assets/images/home_background.jpg");
+}
+
+.home {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding-top: 8rem;
+}
+
+
+.logo-home > a {
+    margin-top: 3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    background-color: $dark;
+    font-family: $sans-serif;
+    font-size: 1.7rem;
+    color: $white;
+}
+
+.logo-home {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-right: 2rem;
+}
+
+.btn {
+    background-color: $secondary;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 3rem;
+    color: $white;
+    font-family: $monospace;
+}
+
+.text-home > h1 {
+ color: white;
+ font-size: 4rem;
+ font-family: $monospace;
+ text-shadow: 2px 2px 4px rgb(0 0 0 / 50%);
+ padding-left: 2rem;
 }
 
 
