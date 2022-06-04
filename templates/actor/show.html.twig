@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acteur #{{ actor.id }}{% endblock %}
+
+{% block body %}
+    <div class="media">
+        {# <div class="poster">
+            <img class="img-fluid" src="{{ asset('build/images/' ~ program.poster)}} " alt="{{ program.title }}">
+        </div> #}
+        <div class="media-body">
+            <h1 class="mt-O">{{ actor.name }}</h1>
+            <p>Séries : 
+                <ul>
+                {% for program in actor.programs %} 
+                    <li><a href="{{ path("program_show", { id: program.id }) }}">{{ program.title }}</a></li>
+                {% endfor %} 
+                </ul>
+            </p>
+        </div>
+
+        <a href="{{ path('program_index') }}">
+            Retour à la liste des programmes
+        </a>
+    </div>
+{% endblock %}
