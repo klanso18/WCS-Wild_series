@@ -27,11 +27,19 @@
                     <li>Aucun acteur pour cette série</li>
                 {% endfor %}
             </ul>
-        </div>
 
-        <a href="{{ path('program_index') }}">
-            Retour à la liste des programmes
-        </a>
+            {% if is_granted("ROLE_ADMIN") or app.user == program.owner %}
+                <a class="btn btn-primary" href="{{ path('program_edit', { 'slug': program.slug} ) }}"><i class="bi bi-pen"></i>Éditer</a>
+            {% endif %}
+
+            {# {% if is_granted("ROLE_ADMIN") or app.user == program.owner %}
+                <a class="btn btn-primary" href="{{ path('app_comment_edit', {'id': comment.id}) }}"><i class="bi bi-pen"></i> edit</a>
+            {% endif %} #}
+
+            <a class="btn btn-primary" href="{{ path('program_index') }}">
+                Retour à la liste des programmes
+            </a>
+        </div>
     </div>
 {% endblock %}
 
