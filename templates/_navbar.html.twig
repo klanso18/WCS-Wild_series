@@ -10,7 +10,7 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-list">
           <div class="col-sm-15">
             <select class="form-select" name="category" id="category" aria-label="Default select example">
@@ -34,6 +34,16 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Mes Favoris</a>
           </li>
+          <div class="log">
+            <li class="nav-item">
+            {% if app.user %}
+              {{ app.user.email }}
+              <a class="nav-link active" aria-current="page" href="{{ path('app_logout') }}"> Se déconnecter</a>
+            {% else %}
+              <a class="nav-link active" aria-current="page" href="{{ path('login') }}"> Se connecter</a>
+            {% endif %}
+            </li>
+          </div>
         </ul>
       </div>
     </div>
