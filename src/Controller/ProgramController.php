@@ -7,6 +7,7 @@ use App\Entity\Episode;
 use App\Entity\Program;
 use App\Service\Slugify;
 use App\Form\ProgramType;
+use App\Repository\CategoryRepository;
 use Symfony\Component\Mime\Email;
 use App\Repository\ProgramRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,13 +23,14 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ProgramController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(ProgramRepository $programRepository): Response
+    public function index(ProgramRepository $programRepository, CategoryRepository $categoryRepository): Response
     {
         $programs = $programRepository->findAll();
-        return $this->render(
-            'program/index.html.twig',
-            ['programs' => $programs]
-        );
+        $categories = $categoryRepository->findAll();
+        return $this->render('program/index.html.twig', [
+                'programs' => $programs,
+                'categories' => $categories
+        ]);
     }
 
 

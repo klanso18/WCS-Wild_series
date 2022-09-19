@@ -3,24 +3,73 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-<h1>Toutes les séries de la table program : </h1>
-    {% for program in programs %}
-        <div class="card" style="width: 18rem;">
-            <img src="{{ asset('build/images/' ~ program.poster)}} " class="card-img-top" alt="{{ program.title }}">
-            <div class="card-body">
-                <h5 class="card-title">{{ program.title }}</h5>
-                <p class="card-text">{{ program.synopsis }}</p>
-                <a href="{{ path("program_show", { 'slug': program.slug }) }}">Voir la fiche</a>
-            </div>
-        </div> 
-    {% else %}
-        Aucune série trouvée.
-    {% endfor %}
+    <div class="container-md">
+        <h1 class="text-center">SERIES</h1>
+        <hr class="mb-5">
+        {% for category in categories %}
+            <section class="swiper mySwiper mb-5 mx-5">
+                <h2 class="mb-4">
+                    {{ category.name }}
+                </h2>
+                <div class="swiper-wrapper">
+                    {% for program in category.programs %}
+                        <div class="swiper-slide d-flex flex-column position-relative">
+                            <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}">
+                            <a class="stretched-link" href="{{ path("program_show", { 'slug': program.slug }) }}">
+                                {{ program.title }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </section>
+        {% endfor %}
+    </div>
+    <div class="homebtn mt-auto mb-5 pt-5">
+        <a href="{{ path('app_home') }}" class="btn">
+            ACCUEIL
+        </a>
+    </div>
 
-    
+    <!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 3,
+    centerMode: true,
+    centerPadding: '20px',
+    spaceBetween: 30,
+    navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+    320: {
+    slidesPerView: 1,
+    spaceBetween: 20
+    },
+    480: {
+    slidesPerView: 1,
+    spaceBetween: 20
+    },
+    768: {
+    slidesPerView: 2,
+    spaceBetween: 40
+    },
+    1024: {
+    slidesPerView: 3,
+    spaceBetween: 50
+    },
+    1400: {
+    slidesPerView: 4,
+    spaceBetween: 50
+    }
+    }
+    });
+</script>
 {% endblock %}
 

@@ -4,19 +4,33 @@
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-
-    <form action="{{ path('login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password"/>
-
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"/> #}
-
-        <button type="submit">login</button>
-    </form>
+    <div class="container mt-2">
+        <div class=" col-lg-6 offset-lg-3">
+            <div class="login p-3">
+                <h1 class="text-center pb-3">Connexion</h1>
+                <form action="{{ path('login') }}" method="post">
+                    <div class="mb-3 mt-4">
+                        <label for="username" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}"/>
+                    </div>
+                    <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="_password"/>
+                    <div class="mb-3">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        
+                    {# If you want to control the URL the user is redirected to on success
+                    <input type="hidden" name="_target_path" value="/account"/> #}
+        
+                    <button class="btn btn-primary btn-sm mt-5 mb-3" type="submit">Se connecter</button>
+                    <div class="password">
+                        <a href="{{ path('app_forgot_password_request')}}">Mot de passe oublié</a>
+                    </div>
+                    <div class="register pt-2">
+                        <a href="{{ path('app_register')}}">Vous n'avez pas encore de compte ? Inscrivez-vous !</a>
+                    </div>
+                </form>
+            </div>
+		</div>
+    </div>
 {% endblock %}

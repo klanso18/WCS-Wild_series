@@ -1,0 +1,13 @@
+.category > .btn {
+    background: transparent;
+    border: 1px $secondary solid;
+    border-radius: 100px;
+    margin-top: 1rem;
+    font-family: $sans-serif;
+    color: $white;
+    text-transform: uppercase;
+}
+
+.category > .btn:hover {
+    background-color: $grey;
+}

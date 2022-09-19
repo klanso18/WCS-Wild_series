@@ -3,18 +3,23 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-<h1>Toutes les catégories de la table category : </h1>
-    {% for category in categories %}
-        <div>
-            <h2>{{ loop.index }} / {{ category.name }}</h2>
-            {# Lien vers la fiche de la catégorie : #}
-            <a href="{{ path("category_show", { categoryName: category.name }) }}">Voir la fiche</a>
-        </div>
-    {% else %}
-        Aucune catégorie trouvée.
-    {% endfor %}
-
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
+    <div class="container-md">
+        <h1 class="text-center">CATEGORIES</h1>
+        <hr>
+        
+            {% for category in categories %}
+                {# Lien vers la fiche de la catégorie : #}
+                <div class="container category">
+                    <a class="btn w-100" href="{{ path("category_show", { categoryName: category.name }) }}">{{ category.name }}</a>
+                </div>
+            {% else %}
+                Aucune catégorie trouvée.
+            {% endfor %}
+        
+    </div>
+    <div class="homebtn mt-auto mb-5 pt-5">
+        <a href="{{ path('app_home') }}" class="btn">
+            ACCUEIL
+        </a>
+    </div>
 {% endblock %}

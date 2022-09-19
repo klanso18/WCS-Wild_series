@@ -1,0 +1,27 @@
+.login {
+    color: $white;
+}
+
+.password > a,
+.register > a {
+    color: $white;
+    font-family: $sans-serif;
+    text-decoration: none;
+    border-bottom: 0.5px $white solid; 
+}
+
+.password > a:hover,
+.register > a:hover {
+    color: $secondary;
+    border-bottom: 0.5px $secondary solid; 
+}
+
+.form-text,
+.form-text > a {
+    font-family: $sans-serif;
+    color: $white;
+}
+
+.form-text > a:hover {
+    color: $secondary;
+}

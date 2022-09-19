@@ -3,23 +3,26 @@
 {# {% block title %}Catégorie #{{ category.name }}{% endblock %} #}
 
 {% block body %}
-    <div class="media">
-        <div class="media-body">
-            <h1 class="mt-O">{{ category.name }}</h1>
+<div class="container-md">
+    <h1 class="text-center text-uppercase">{{ category.name }}</h1>
+    <hr class="mb-5">
+        <div class="allprograms text-center">
             {% for program in programs %}
-                <div>
-                    <h2>{{ program.id }} / {{ program.title }}</h2>
-                    <p>{{ program.synopsis }}</p>
-                    {# Lien vers la fiche de la série : #}
-                    <a href="{{ path("program_show", { 'slug': program.slug }) }}">Voir la fiche</a>
+                <div class="oneprogram d-flex flex-column position-relative">
+                    <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}">
+                    <a class="stretched-link" href="{{ path("program_show", { 'slug': program.slug }) }}">
+                        {{ program.title }}
+                    </a>
                 </div>
             {% else %}
                 Aucune série trouvée.
             {% endfor %}
         </div>
-        <a href="{{ path('program_index') }}">
-            Retour à la liste des programmes
-        </a>
-    </div>
+</div>
+<div class="homebtn mt-auto mb-5 pt-5">
+    <a href="{{ path('app_home') }}" class="btn">
+        ACCUEIL
+    </a>
+</div>
 {% endblock %}
 

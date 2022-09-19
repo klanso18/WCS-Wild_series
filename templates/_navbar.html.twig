@@ -7,23 +7,24 @@
     </button>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Wild Series</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
           <li class="nav-list">
-          <div class="col-sm-15">
-            <select class="form-select" name="category" id="category" aria-label="Default select example">
-                <option>Catégories</option>
-            </select>
-          </div>
+            <div class="col-sm-15">
+              <select class="form-select" name="category" id="category" aria-label="Default select example">
+                  <option>Catégories</option>
+              </select>
+            </div>
           </li>
           <li class="nav-list">
-          <div class="col-sm-15">
-            <select class="form-select" name="category" id="category" aria-label="Default select example">
-                <option>Acteurs</option>
-            </select>
-          </div>
+            <div class="col-sm-15">
+              <select class="form-select" name="category" id="category" aria-label="Default select example">
+                  <option>Acteurs</option>
+              </select>
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{ path('category_index') }}">Les Catégories</a>
@@ -34,18 +35,43 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Mes Favoris</a>
           </li>
-          <div class="log">
-            <li class="nav-item">
             {% if app.user %}
-              {{ app.user.email }}
-              <a class="nav-link active" aria-current="page" href="{{ path('app_logout') }}"> Se déconnecter</a>
+            <div class="log">
+              <div class="login">
+                <li class="nav-item">
+                  <a class="nav-link-img" href="#">
+                    <img alt="Profile" onmouseover="changePic1()" onmouseout="changePic2()" id="myImg" src="{{ asset('build/images/log-white.png') }}" width="150" height="200">
+                  </a>
+                </li>
+              </div>
+              <div class="logout">
+                <li class="nav-item">
+                  <a class="nav-link-img" href="{{ path('app_logout') }}">
+                    <img alt="Logout" onmouseover="changePic3()" onmouseout="changePic4()" id="myImg2" src="{{ asset('build/images/logout-white.png') }}" width="150" height="200">
+                  </a>
+                </li>
+              </div>
+            </div>
             {% else %}
               <a class="nav-link active" aria-current="page" href="{{ path('login') }}"> Se connecter</a>
             {% endif %}
-            </li>
-          </div>
         </ul>
       </div>
     </div>
   </div>
 </nav>
+
+<script>
+  function changePic1() {
+  document.getElementById("myImg").src ="{{ asset('build/images/log-green.png') }}";
+  }
+  function changePic2(){
+  document.getElementById("myImg").src ="{{ asset('build/images/log-white.png') }}";
+  }
+  function changePic3() {
+  document.getElementById("myImg2").src ="{{ asset('build/images/logout-green.png') }}";
+  }
+  function changePic4(){
+  document.getElementById("myImg2").src ="{{ asset('build/images/logout-white.png') }}";
+  }
+</script>

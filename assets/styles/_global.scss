@@ -1,0 +1,44 @@
+h1 {
+    font-family: $roboto;
+    font-size: 2rem;
+    color: $white;
+}
+
+h2 {
+    font-family: $roboto;
+    font-size: 1.3rem;
+    color: $white;
+}
+
+.homebtn {
+    display: flex;
+    justify-content: center;
+}
+
+hr {
+    color: $white;
+}
+
+.btn {
+    background: linear-gradient(145deg, rgb(0, 172, 106), rgb(0, 241, 113));
+    padding-left: 2rem;
+    padding-right: 2rem;
+    color: $dark;
+    font-family: $sans-serif;
+}
+
+.btn:hover {
+    background: $grey;
+    color: $secondary;
+    border-color: #000000;
+    box-shadow: 0 0 0.2rem 0.1rem $secondary;
+}
+
+.form-control:focus {
+    border-color: #000000;
+    box-shadow: 0 0 0.2rem 0.1rem $secondary;
+}
+
+.form-check-input:checked {
+    background-color: $secondary;
+}

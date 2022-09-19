@@ -3,51 +3,57 @@
 {% block title %} {{program.title}} {% endblock %}
 
 {% block body %}
-    <div class="media">
-    <div class="poster">
-        <img class="img-fluid" src="{{ asset('build/images/' ~ program.poster)}} " alt="{{ program.title }}">
+    <div class="container-md">
+        <h1 class="text-center text-uppercase">{{ episode.title }}</h1>
+        <hr class="mb-5">
+        <div class="media">
+            <div class="poster">
+                <img class="img-fluid" src="{{ asset('build/images/' ~ program.poster)}} " alt="{{ program.title }}">
+            </div>
+            <div class="media-body">
+                <h1 class="mt-O">{{ program.title }}</h1>
+                    <h2>Saison {{ season.number }}</h2>
+                        <h3>Episode {{ episode.number }} : {{episode.title}}</h3>
+                            <p>Synopsis : <br>{{ episode.synopsis }}</p>
+                            {% if app.user %}
+                            <a class="btn btn-outline-primary" href="{{ path('app_comment_new', {'episode_slug': episode.slug}) }}">ajouter un commentaire</a>  
+                
+                            <table class="table mt-5">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Comment</th>
+                                        <th>Rate</th>
+                                        <th>actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for comment in episode.comments %}
+                                    <tr>
+                                        <td>{{ comment.id }}</td>
+                                        <td>{{ comment.comment }}</td>
+                                        <td>{{ comment.rate }}</td>
+                                        <td>
+                                            <a class="btn btn-primary" href="{{ path('app_comment_show', {'id': comment.id}) }}"><i class="bi bi-eye"></i> show</a>
+                                            {% if is_granted("ROLE_ADMIN") or app.user == comment.author %}
+                                                <a class="btn btn-primary" href="{{ path('app_comment_edit', {'id': comment.id}) }}"><i class="bi bi-pen"></i> edit</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="4">aucun commentaire trouvé</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endif %}
+            </div>
+        </div>
     </div>
-    <div class="media-body">
-    <h1 class="mt-O">{{ program.title }}</h1>
-            <h2>Saison {{ season.number }}</h2>
-                <h3>Episode {{ episode.number }} : {{episode.title}}</h3>
-                    <p>Synopsis : <br>{{ episode.synopsis }}</p>
-                        {% if app.user %}
-                    <a class="btn btn-outline-primary" href="{{ path('app_comment_new', {'episode_slug': episode.slug}) }}">ajouter un commentaire</a>  
-        
-                    <table class="table mt-5">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Comment</th>
-                                <th>Rate</th>
-                                <th>actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                    {% for comment in episode.comments %}
-                            <tr>
-                                <td>{{ comment.id }}</td>
-                                <td>{{ comment.comment }}</td>
-                                <td>{{ comment.rate }}</td>
-                                <td>
-                                    <a class="btn btn-primary" href="{{ path('app_comment_show', {'id': comment.id}) }}"><i class="bi bi-eye"></i> show</a>
-                                    {% if is_granted("ROLE_ADMIN") or app.user == comment.author %}
-                                        <a class="btn btn-primary" href="{{ path('app_comment_edit', {'id': comment.id}) }}"><i class="bi bi-pen"></i> edit</a>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                    {% else %}
-                            <tr>
-                                <td colspan="4">aucun commentaire trouvé</td>
-                            </tr>
-                    {% endfor %}
-                        </tbody>
-                    </table>
-                {% endif %}
-
-    <a href="{{ path('program_index') }}">
-    Retour à la liste des programmes
-    </a>
+    <div class="homebtn mt-auto mb-5 pt-5">
+        <a href="{{ path('app_home') }}" class="btn">
+            ACCUEIL
+        </a>
     </div>
 {% endblock %}

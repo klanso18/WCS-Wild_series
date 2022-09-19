@@ -1,12 +1,17 @@
 @import '_var.scss';
 @import "~bootstrap/scss/bootstrap";
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Open+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import '_global.scss';
 @import '_navbar.scss';
 @import '_program.scss';
+@import '_category.scss';
+@import '_select-category.scss';
+@import '_login.scss';
 
 
 body {
-    background-color: rgb(255, 255, 255);
+    background-color: $dark;
     padding-top: 6rem;
     // width: 100%;
     // height: 100%;
@@ -20,11 +25,6 @@ body {
 .media {
     display: grid;
     grid-template-columns: 1fr 2fr;
-}
-
-.media-body {
-    padding: 2rem;
-    text-align: left;
 }
 
 
@@ -66,15 +66,6 @@ body {
     min-width: 50%;
     max-width: 70%;
     box-shadow: 1px 1px 4px #000000;
-}
-
-.btn {
-    background-color: $secondary;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    margin-top: 3rem;
-    color: $white;
-    font-family: $monospace;
 }
 
 .text-home > h1 {

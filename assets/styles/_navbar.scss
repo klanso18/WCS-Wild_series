@@ -1,5 +1,6 @@
 .navbar-brand,
-.nav-item {
+.nav-item, 
+.nav-link {
     font-family: $sans-serif;
 }
 
@@ -10,7 +11,7 @@
 
 .navbar {
     background-color: inherit;
-    background-color: $primary;
+    background-color: transparent;
 }
 
 .navbar-toggler {
@@ -46,3 +47,43 @@
     color: $secondary;
 }
 
+.nav-link-img>img {
+    height: auto;
+    width: auto;
+    max-width: 25px;
+    max-height: 25px;
+    margin-top: 0.3rem;
+}
+
+.log {
+    display: flex; 
+    flex-direction: row;
+    padding-top: 0.2rem;
+}
+
+.login {
+    padding-right: 1rem;
+}
+
+.logout {
+    padding-top: 0.05rem;
+}
+
+@media screen and (max-width: 992px) {
+    .nav-list {
+        display: none;
+    }
+
+    .offcanvas-body {
+        background-color: $dark;
+    }
+
+    .log {
+        display: flex; 
+        flex-direction: column;
+    }
+
+    .logout {
+        padding-top: 0.8rem;
+    }
+  }

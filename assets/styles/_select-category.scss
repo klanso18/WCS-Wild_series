@@ -1,0 +1,21 @@
+.oneprogram a {
+    color: $white;
+    text-decoration: none;
+    font-family: $sans-serif;
+    padding-top: 1rem;
+}
+
+.oneprogram img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.allprograms {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap: 1rem;
+    column-gap: 4.5rem;
+}
