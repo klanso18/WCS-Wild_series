@@ -3,18 +3,75 @@
 {% block title %}Wild Series{% endblock %}
 
 {% block body %}
-<section>
-    <body id="homepage">
-        <div class="home">
-            <div class="text-home">
-                <h1>Can’t decide what to watch ?</h1>
-            </div>
-            <div class="logo-home">
-                <img class="img-fluid" src="{{ asset('build/images/logo.jpg')}}" alt="logo">
-                <a type="button" class="btn btn-dark" href="/category">Entrer</a>
-            </div>
-           
+<div class="container-fluid p-5 d-flex flex-column justify-content-center homepage">
+    <div class="logo">
+        <img class="img-fluid" src="{{ asset('build/images/logoWS2.png')}}" alt="logo">
+    </div>
+</div>
+<div class="container-fluid p-5 mt-3 new-programs">
+    <section class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            {% for program in programs %}
+                <div class="swiper-slide d-flex flex-column position-relative">
+                    <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}">
+                    <a class="stretched-link" href="{{ path("program_show", { 'slug': program.slug }) }}">
+                        {{ program.title }}
+                    </a>
+                </div>
+            {% endfor %}
         </div>
-    </body>
-</section>
+        <div class="grid">
+            {% for program in programs %}
+                <div class="swiper-slide d-flex flex-column position-relative">
+                    <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}">
+                    <a class="stretched-link" href="{{ path("program_show", { 'slug': program.slug }) }}">
+                        {{ program.title }}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    <div class="swiper-pagination pb-5"></div>
+</div>
+
+  <!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 3,
+    centerMode: true,
+    centerPadding: '20px',
+    spaceBetween: 30,
+    grabCursor: true,
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    breakpoints: {
+    320: {
+    slidesPerView: 1,
+    spaceBetween: 20
+    },
+    480: {
+    slidesPerView: 3,
+    spaceBetween: 20
+    },
+    768: {
+    slidesPerView: 4,
+    spaceBetween: 40
+    },
+    1024: {
+    slidesPerView: 5,
+    spaceBetween: 50
+    },
+    1400: {
+    slidesPerView: 7,
+    spaceBetween: 50
+    }
+    }
+    });
+</script>
+
 {% endblock %}

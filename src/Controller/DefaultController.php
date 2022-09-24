@@ -1,16 +1,22 @@
 <?php
-
+// src/Controller/ProgramController.php
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\CategoryRepository;
+use App\Repository\ProgramRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class DefaultController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(ProgramRepository $programRepository): Response
     {
-        return $this->render('home/homepage.html.twig');
+        $programs = $programRepository->findAll();
+        return $this->render('home/homepage.html.twig', [
+                'programs' => $programs,
+        ]);
     }
 }
