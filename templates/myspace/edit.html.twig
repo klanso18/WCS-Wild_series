@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon profil{% endblock %}
+
+{% block body %}
+    <div class="container-md">
+        <h1 class="text-center">MON PROFIL</h1>
+        <hr class="mb-5">
+        <div class="edit-profile">
+            <h2>Modifier mon profil</h2>
+                {{ form(form) }}
+                <a class="btn btn-primary btn-sm mt-3" href="{{ path('myspace_index') }}">
+                    Retour à mon espace
+                </a>
+        </div>
+    </div>
+{% endblock %}

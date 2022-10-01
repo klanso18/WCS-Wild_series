@@ -1,0 +1,29 @@
+.table,
+.edit-profile {
+    color: $white;
+}
+
+.mygrid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: center;
+    gap: 2rem;
+}
+
+@media screen and (max-width: 992px) {
+    .mygrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .mygrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .mygrid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

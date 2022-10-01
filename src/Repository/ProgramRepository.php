@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Program;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Program>
@@ -16,7 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProgramRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private Security $security)
     {
         parent::__construct($registry, Program::class);
     }
@@ -37,6 +39,15 @@ class ProgramRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function queryAll(): Query|null
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.owner = :user')
+            ->setParameter('user', $this->security->getUser())
+            // ->orderBy('p.title', 'ASC')
+            ->getQuery();
     }
 
 //    /**

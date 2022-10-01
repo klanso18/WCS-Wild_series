@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon espace{% endblock %}
+
+{% block body %}
+    <div class="container-md">
+        <h1 class="text-center">MON ESPACE</h1>
+        <hr class="mb-5">
+        <div class="container profile">
+            <h2>Profil de {{ app.user.firstname }} :</h2>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Nom</th>
+                            <td>{{ app.user.name }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Prénom</th>
+                            <td>{{ app.user.firstname }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email</th>
+                            <td>{{ app.user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Nombre de série</th>
+                            <td>{{ app.user.programs|length }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a class="btn btn-primary btn-sm mt-3" href="{{ path('myspace_edit-profile') }}">
+                    Modifier mon profil
+                </a>
+        </div>
+
+        <div class="container myprograms mt-5">
+        <h2>Séries de {{ app.user.firstname }} :</h2>
+            <div class="mygrid pt-3 pb-5">
+                {% for program in app.user.programs %}
+                    <div class="swiper-slide d-flex flex-column position-relative">
+                        <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}">
+                        <a class="stretched-link" href="{{ path("program_show", { 'slug': program.slug }) }}">
+                            {{ program.title }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
