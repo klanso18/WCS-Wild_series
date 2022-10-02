@@ -7,9 +7,10 @@ use App\Entity\Episode;
 use App\Entity\Program;
 use App\Service\Slugify;
 use App\Form\ProgramType;
-use App\Repository\CategoryRepository;
 use Symfony\Component\Mime\Email;
+use App\Form\SearchProgramFormType;
 use App\Repository\ProgramRepository;
+use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,13 +24,24 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ProgramController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(ProgramRepository $programRepository, CategoryRepository $categoryRepository): Response
+    public function index(Request $request, ProgramRepository $programRepository, CategoryRepository $categoryRepository): Response
     {
-        $programs = $programRepository->findAll();
-        $categories = $categoryRepository->findAll();
-        return $this->render('program/index.html.twig', [
+        // $programs = $programRepository->findAll();
+        // $categories = $categoryRepository->findAll();
+        $form = $this->createForm(SearchProgramFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->getData()['search'];
+            $programs = $programRepository->findLikeName($search);
+        } else {
+            $programs = $programRepository->findAll();
+        }
+
+        return $this->renderForm('program/index.html.twig', [
                 'programs' => $programs,
-                'categories' => $categories
+                // 'categories' => $categories,
+                'form' => $form,
         ]);
     }
 

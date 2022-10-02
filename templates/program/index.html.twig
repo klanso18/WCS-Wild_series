@@ -6,70 +6,80 @@
     <div class="container-md">
         <h1 class="text-center">SERIES</h1>
         <hr class="mb-5">
-        {% for category in categories %}
-            <section class="swiper mySwiper mb-5 mx-5">
-                <h2 class="mb-4">
-                    {{ category.name }}
-                </h2>
-                <div class="swiper-wrapper">
-                    {% for program in category.programs %}
-                        <div class="swiper-slide d-flex flex-column position-relative">
-                            <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}">
-                            <a class="stretched-link" href="{{ path("program_show", { 'slug': program.slug }) }}">
-                                {{ program.title }}
-                            </a>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
-            </section>
-        {% endfor %}
+        <div class="search-form col-lg-6 offset-lg-3">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-primary">Rechercher</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="container-fluid p-5 mt-3 new-programs">
+        <section class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                {% for program in programs %}
+                    <div class="swiper-slide d-flex flex-column position-relative">
+                        <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}">
+                        <a class="stretched-link" href="{{ path("program_show", { 'slug': program.slug }) }}">
+                            {{ program.title }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="grid">
+                {% for program in programs %}
+                    <div class="swiper-slide d-flex flex-column position-relative">
+                        <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}">
+                        <a class="stretched-link" href="{{ path("program_show", { 'slug': program.slug }) }}">
+                            {{ program.title }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <div class="swiper-pagination pb-5"></div>
     </div>
-    <div class="homebtn mt-auto mb-5 pt-5">
-        <a href="{{ path('app_home') }}" class="btn">
-            ACCUEIL
-        </a>
-    </div>
-
-    <!-- Swiper JS -->
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-<!-- Initialize Swiper -->
-<script>
-    var swiper = new Swiper(".mySwiper", {
-    slidesPerView: 3,
-    centerMode: true,
-    centerPadding: '20px',
-    spaceBetween: 30,
-    navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-    },
-    breakpoints: {
-    320: {
-    slidesPerView: 1,
-    spaceBetween: 20
-    },
-    480: {
-    slidesPerView: 1,
-    spaceBetween: 20
-    },
-    768: {
-    slidesPerView: 2,
-    spaceBetween: 40
-    },
-    1024: {
-    slidesPerView: 3,
-    spaceBetween: 50
-    },
-    1400: {
-    slidesPerView: 4,
-    spaceBetween: 50
-    }
-    }
-    });
-</script>
-{% endblock %}
-
+    
+      <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        centerMode: true,
+        centerPadding: '20px',
+        spaceBetween: 30,
+        grabCursor: true,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+          },
+        breakpoints: {
+        320: {
+        slidesPerView: 1,
+        spaceBetween: 20
+        },
+        480: {
+        slidesPerView: 3,
+        spaceBetween: 20
+        },
+        768: {
+        slidesPerView: 3,
+        spaceBetween: 40
+        },
+        1024: {
+        slidesPerView: 4,
+        spaceBetween: 50
+        },
+        1200: {
+        slidesPerView: 5,
+        spaceBetween: 50
+        },
+        1400: {
+        slidesPerView: 5,
+        spaceBetween: 50
+        }
+        }
+        });
+    </script>
+    
+    {% endblock %}
