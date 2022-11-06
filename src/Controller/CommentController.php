@@ -93,6 +93,8 @@ class CommentController extends AbstractController
             $season = $comment->getEpisode()->getSeason();
             $program = $season->getProgram()->getSlug();
 
+            $this->addFlash('success', 'Votre commentaire a bien été modifié');
+
             return $this->redirectToRoute('program_episode_show', 
             ["program_slug" => $program, 
             "season_id" => $seasonId, 

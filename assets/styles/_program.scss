@@ -96,3 +96,13 @@ font-family: $sans-serif;
 .search-form {
   color: $white;
 }
+
+.buttons-align {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.buttons-align > a {
+  margin-right: 1rem;
+}

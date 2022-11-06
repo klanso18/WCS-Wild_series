@@ -7,7 +7,6 @@
 
     {{ include('season/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_season_index') }}">back to list</a>
+    <a href="{{ path('program_season_show', { 'program_slug': program.slug, 'season_id': season.id }) }}">back to list</a>
 
-    {{ include('season/_delete_form.html.twig') }}
 {% endblock %}

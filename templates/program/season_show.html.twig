@@ -9,18 +9,24 @@
         </div>
     <div class="media-body">
         <h1 class="mt-O">{{ program.title }}</h1>
-                <h2>Saison {{ season.number }}</h2>
-                    <ul>
-                        <li>Année : {{ season.year }}</li>
-                        <li>Description : {{ season.description }}</li>
-                    </ul>
-                    <h3>Liste des épisodes :</h3>
-                        {% for episode in season.episodes %}
-                            <ul>
-                                <li><a href="{{ path("program_episode_show", {"program_slug": program.slug, "season_id": season.id,
-                                "episode_slug": episode.slug})}}">Episode {{episode.number}} : {{episode.title}}</a>  </li>
-                            </ul>
-                        {% endfor %}
+        <h2>Saison {{ season.number }}</h2>
+        <ul>
+            <li>Année : {{ season.year }}</li>
+            <li>Description : {{ season.description }}</li>
+        </ul>
+        <h3>Liste des épisodes :</h3>
+        {% for episode in season.episodes %}
+            <ul>
+                <li><a href="{{ path("program_episode_show", {"program_slug": program.slug, "season_id": season.id,
+                "episode_slug": episode.slug})}}">Episode {{episode.number}} : {{episode.title}}</a>  </li>
+            </ul>
+        {% endfor %}
+        <div class="buttons-align mt-3">
+            {% if is_granted("ROLE_ADMIN") or app.user == program.owner %}
+                <a class="btn btn-primary" href="{{ path('program_season_edit', { 'program_slug': program.slug, 'season_id': season.id }) }}"><i class="bi bi-pen"></i>Éditer</a>
+                {{ include('season/_delete_form.html.twig') }}
+            {% endif %}
+        </div>
     </div>
 
     <a href="{{ path('program_index') }}">

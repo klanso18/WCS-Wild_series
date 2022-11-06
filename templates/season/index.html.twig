@@ -16,15 +16,15 @@
             </tr>
         </thead>
         <tbody>
-        {% for season in seasons %}
+        {% for season in program.seasons %}
             <tr>
                 <td>{{ season.id }}</td>
                 <td>{{ season.number }}</td>
                 <td>{{ season.year }}</td>
                 <td>{{ season.description }}</td>
                 <td>
-                    <a href="{{ path('app_season_show', {'id': season.id}) }}">show</a>
-                    <a href="{{ path('app_season_edit', {'id': season.id}) }}">edit</a>
+                    <a href="{{ path('program_season_show', { 'program_slug': program.slug, 'season_id': season.id }) }}">show</a>
+                    <a href="{{ path('program_season_edit', { 'program_slug': program.slug, 'season_id': season.id }) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -35,5 +35,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_season_new') }}">Create new</a>
+    <a href="{{ path('program_season_new', { 'slug': program.slug }) }}">Create new</a>
 {% endblock %}

@@ -5,18 +5,23 @@ namespace App\Controller;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Entity\Program;
+use App\Form\SeasonType;
 use App\Service\Slugify;
 use App\Form\ProgramType;
 use Symfony\Component\Mime\Email;
 use App\Form\SearchProgramFormType;
+use App\Repository\SeasonRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -47,7 +52,13 @@ class ProgramController extends AbstractController
 
 
     #[Route('/new', name: 'new')]
-    public function new(Request $request, MailerInterface $mailer, ProgramRepository $programRepository, Slugify $slugify): Response
+    public function new(
+        Request $request, 
+        MailerInterface $mailer, 
+        ProgramRepository $programRepository, 
+        Slugify $slugify,
+        SluggerInterface $slugger
+    ): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -57,7 +68,24 @@ class ProgramController extends AbstractController
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
             $program->setOwner($this->getUser());
+            $poster = $form->get('poster')->getData();
+            if ($poster) {
+                $originalFilename = pathinfo($poster->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$poster->guessExtension();
+                try {
+                    $poster->move(
+                        $this->getParameter('programs_dir'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                $program->setPoster($newFilename);
+            }
             $programRepository->add($program, true); 
+
+            $this->addFlash('success', 'La nouvelle série a bien été créée');
 
             $email = (new Email())
                 ->from($this->getParameter('mailer_from'))
@@ -99,24 +127,14 @@ class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $programRepository->add($program, true);
 
-            return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'La série a bien été modifiée');
+
+            return $this->redirectToRoute('program_show', ['slug' => $program->getSlug()]);
         }
 
         return $this->renderForm('program/edit.html.twig', [
             'program' => $program,
             'form' => $form,
-        ]);
-    }
-
-    #[Route('/{program_slug}/season/{season_id<\d+>}', methods: ['GET'], name: 'season_show')]
-    #[ParamConverter('program', options: ['mapping' =>['program_slug' => 'slug']])]
-    // #[Entity('program', options: ['id' => 'program_id'])]
-    #[Entity('season', options: ['id' => 'season_id'])]
-    public function showSeason(Program $program, Season $season): Response
-    {
-        return $this->render('program/season_show.html.twig',[
-            'program' => $program,
-            'season' => $season
         ]);
     }
 
@@ -135,11 +153,20 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    // #[Route('/{slug}/delete', name: 'delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, Program $program, ProgramRepository $programRepository): Response
     {
+        // Check wether the logged in user is the owner of the program
+        if (!($this->getUser() == $program->getOwner())) {
+            // If not the owner, throws a 403 Access Denied exception
+            throw new AccessDeniedException('Vous n\'avez pas les droits pour modifier cette série!');
+        }
+        
         if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
             $programRepository->remove($program, true);
+
+            $this->addFlash('danger', 'La série a bien été supprimée');
         }
 
         return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);

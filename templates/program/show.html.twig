@@ -12,16 +12,17 @@
             </div>
             <div class="media-body">
                 <h2 class="mb-3">{{ program.title }}</h2>
-                {# <p>{{ program.category.name }}</p> #}
                 <div class="program-cat mb-3">
                     <a class="btn" href="{{ path("category_show", { categoryName: program.category.name }) }}">{{ program.category.name }}</a>
                 </div>
                 {% for season in program.seasons %} 
                     <div class="program-season mb-3">
-                        <a class="btn" href="/program/{{ program.slug }}/season/{{ season.id }}">Saison {{ season.number }}</a>
-                         {# <a href="{{ path('program_season_show', { 'program_slug': program.slug, 'season_id': season.id }) }}">Saison {{ season.number }}</a> #}
+                        <a class="btn" href="/program/{{ program.slug }}/season/{{ season.id }}">Saison {{ season.number }}</a>   
                     </div>
                 {% endfor %} 
+                {% if is_granted("ROLE_ADMIN") or app.user == program.owner %}
+                    <a class="btn btn-primary" href="{{ path('program_season_new', { 'slug': program.slug }) }}"><i class="bi bi-pen"></i>Ajouter une nouvelle saison</a>
+                {% endif %}
                 <p class="synopsis">{{ program.synopsis }}</p>
                 <div class="actorsbyprogram">
                     {% for actor in program.actors %}
@@ -32,26 +33,17 @@
                             <li>Aucun acteur pour cette série</li>
                     {% endfor %}
                 </div>
-                {# <strong>Acteurs :</strong>
-                <ul>
-                    {% for actor in program.actors %}
-                        <li><a href="{{ path("actor_show", { id: actor.id }) }}">{{ actor.name }}</a></li>
-                    {% else %}
-                        <li>Aucun acteur pour cette série</li>
-                    {% endfor %}
-                </ul> #}
+                <div class="buttons-align mt-3">
+                    {% if is_granted("ROLE_ADMIN") or app.user == program.owner %}
+                        <a class="btn btn-primary" href="{{ path('program_edit', { 'slug': program.slug } ) }}"><i class="bi bi-pen"></i>Éditer</a>
+                        {% include "program/_delete_form.html.twig" %}
+                    {% endif %}
+                </div>
 
-                {% if is_granted("ROLE_ADMIN") or app.user == program.owner %}
-                    <a class="btn btn-primary" href="{{ path('program_edit', { 'slug': program.slug} ) }}"><i class="bi bi-pen"></i>Éditer</a>
-                {% endif %}
-
-                {# {% if is_granted("ROLE_ADMIN") or app.user == program.owner %}
-                    <a class="btn btn-primary" href="{{ path('app_comment_edit', {'id': comment.id}) }}"><i class="bi bi-pen"></i> edit</a>
-                {% endif %} #}
-
-                <a class="btn btn-primary" href="{{ path('program_index') }}">
+                <a class="btn btn-primary mt-5" href="{{ path('program_index') }}">
                     Retour à la liste des programmes
                 </a>
+                
             </div>
         </div>
     </div>

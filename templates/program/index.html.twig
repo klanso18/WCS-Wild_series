@@ -17,7 +17,8 @@
             <div class="swiper-wrapper">
                 {% for program in programs %}
                     <div class="swiper-slide d-flex flex-column position-relative">
-                        <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}">
+                        {# <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}"> #}
+                        <img src="/{{ programs_dir }}/{{ program.poster }} " class="img-fluid" alt="{{ program.title }}">
                         <a class="stretched-link" href="{{ path("program_show", { 'slug': program.slug }) }}">
                             {{ program.title }}
                         </a>
@@ -27,7 +28,8 @@
             <div class="grid">
                 {% for program in programs %}
                     <div class="swiper-slide d-flex flex-column position-relative">
-                        <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}">
+                        {# <img src="{{ asset('build/images/' ~ program.poster)}} " class="img-fluid" alt="{{ program.title }}"> #}
+                        <img src="/{{ programs_dir }}/{{ program.poster }} " class="img-fluid" alt="{{ program.title }}">
                         <a class="stretched-link" href="{{ path("program_show", { 'slug': program.slug }) }}">
                             {{ program.title }}
                         </a>
@@ -36,6 +38,13 @@
             </div>
         </section>
         <div class="swiper-pagination pb-5"></div>
+    </div>
+    
+    <div class="text-center">
+        {% if is_granted("ROLE_CONTRIBUTOR") %}
+            <a class="btn btn-primary" href="{{ path('program_new') }}"><i class="bi bi-pen"></i>Ajouter une nouvelle série</a>
+            {# <a class="btn btn-primary" href="{{ path('app_episode_new') }}"><i class="bi bi-pen"></i>Ajouter un nouvel épisode</a> #}
+        {% endif %}
     </div>
     
       <!-- Swiper JS -->
